@@ -1,0 +1,8 @@
+CREATE TABLE pet (
+    id SERIAL PRIMARY KEY,
+    nome VARCHAR(255) NOT NULL,
+    raca VARCHAR(100) NOT NULL,
+    idade INT NOT NULL,
+    peso NUMERIC(5, 2) NOT NULL,
+    tutor_id INT REFERENCES usuario(id) ON DELETE CASCADE
+);
