@@ -20,9 +20,9 @@ public class UsuarioController {
 
     @Transactional
     @PostMapping("/create-account")
-    public ResponseEntity<Void> saveUsuario(@RequestBody UsuarioDTO usuario) {
+    public ResponseEntity<String> saveUsuario(@RequestBody UsuarioDTO usuario) {
         usuarioService.saveUsuario(usuario);
-        return ResponseEntity.status(HttpStatus.CREATED).build();
+        return ResponseEntity.status(HttpStatus.CREATED).body("Usuário cadastrado com sucesso!");
     }
         
 }
