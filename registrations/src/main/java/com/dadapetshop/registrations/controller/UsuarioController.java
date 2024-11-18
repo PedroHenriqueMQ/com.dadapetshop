@@ -21,7 +21,6 @@ public class UsuarioController {
     @Transactional
     @PostMapping("/create-account")
     public ResponseEntity<Void> saveUsuario(@RequestBody UsuarioDTO usuario) {
-        System.out.println(usuario.pets());
         usuarioService.saveUsuario(usuario);
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
