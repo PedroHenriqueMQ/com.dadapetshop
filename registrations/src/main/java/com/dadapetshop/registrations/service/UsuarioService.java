@@ -18,9 +18,7 @@ public class UsuarioService {
         if (usuarioRepository.findByEmail(usuarioDTO.email()).isPresent()) 
             throw new IllegalStateException ("Usuário com esse e-mail já existe.");
 
-        var usuario = usuarioMapper.toEntity(usuarioDTO);
+        var usuario = usuarioMapper.toEntityBeforeSave(usuarioDTO);
         usuarioRepository.save(usuario);
     }
-
-
 }
