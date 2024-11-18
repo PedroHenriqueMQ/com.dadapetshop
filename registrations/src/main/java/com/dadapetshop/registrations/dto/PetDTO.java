@@ -6,5 +6,6 @@ public record PetDTO(
     String nome,
     String raca,
     Integer idade,
-    BigDecimal peso
+    BigDecimal peso,
+    String emailTutor
 ) {}
