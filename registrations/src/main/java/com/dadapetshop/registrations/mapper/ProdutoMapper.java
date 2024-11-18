@@ -7,6 +7,6 @@ import com.dadapetshop.registrations.model.Produto;
 
 @Mapper(componentModel = "spring")
 public interface ProdutoMapper {
-    ProdutoDTO produtoToProdutoDTO(Produto produto);
-    Produto produtoDTOToProduto(ProdutoDTO produtoDTO);
+    ProdutoDTO toDTO(Produto produto);
+    Produto toEntity(ProdutoDTO produtoDTO);
 }

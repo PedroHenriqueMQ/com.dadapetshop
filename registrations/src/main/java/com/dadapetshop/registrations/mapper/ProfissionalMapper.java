@@ -7,6 +7,6 @@ import com.dadapetshop.registrations.model.Profissional;
 
 @Mapper(componentModel = "spring")
 public interface ProfissionalMapper {
-    ProfissionalDTO profissionalToProfissionalDTO(Profissional profissional);
-    Profissional profissionalDTOToProfissional(ProfissionalDTO profissionalDTO); 
+    ProfissionalDTO toDTO(Profissional profissional);
+    Profissional toEntity(ProfissionalDTO profissionalDTO); 
 }

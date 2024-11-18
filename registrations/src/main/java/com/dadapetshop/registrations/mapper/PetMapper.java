@@ -1,11 +1,15 @@
 package com.dadapetshop.registrations.mapper;
 
 import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
+
 import com.dadapetshop.registrations.dto.PetDTO;
 import com.dadapetshop.registrations.model.Pet;
 
-@Mapper(componentModel = "spring")
+@Mapper(componentModel = "spring", uses = UsuarioMapperHelper.class)
 public interface PetMapper {
-    PetDTO petToPetDTO(Pet pet);
-    Pet petDTOToPet(PetDTO petDTO); 
+    @Mapping(target = "emailTutor", source = "tutor", qualifiedByName = "usuarioToEmail")
+    PetDTO toDTO(Pet pet);
+    @Mapping(target = "tutor", source = "emailTutor", qualifiedByName = "emailToUsuario")
+    Pet toEntity(PetDTO petDTO);
 }

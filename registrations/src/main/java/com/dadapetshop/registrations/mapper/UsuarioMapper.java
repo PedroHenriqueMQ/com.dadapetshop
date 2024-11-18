@@ -7,6 +7,6 @@ import com.dadapetshop.registrations.model.Usuario;
 
 @Mapper(componentModel = "spring")
 public interface UsuarioMapper {
-    UsuarioDTO usuarioToUsuarioDTO(Usuario usuario);
-    Usuario usuarioDTOToUsuario(UsuarioDTO usuarioDTO); // 
+    UsuarioDTO toDTO(Usuario usuario);
+    Usuario toEntity(UsuarioDTO usuarioDTO);
 }
