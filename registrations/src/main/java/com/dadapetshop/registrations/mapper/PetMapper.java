@@ -6,7 +6,7 @@ import org.mapstruct.Mapping;
 import com.dadapetshop.registrations.dto.PetDTO;
 import com.dadapetshop.registrations.model.Pet;
 
-@Mapper(componentModel = "spring", uses = UsuarioMapperHelper.class)
+@Mapper(componentModel = "spring", uses = {UsuarioMapperHelper.class})
 public interface PetMapper {
     @Mapping(target = "emailTutor", source = "tutor", qualifiedByName = "usuarioToEmail")
     PetDTO toDTO(Pet pet);
