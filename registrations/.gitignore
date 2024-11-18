@@ -40,3 +40,6 @@ out/
 .gradle/
 .idea/
 .vscode/
+.gitattributes
+gradlew
+settings.gradle.kts
