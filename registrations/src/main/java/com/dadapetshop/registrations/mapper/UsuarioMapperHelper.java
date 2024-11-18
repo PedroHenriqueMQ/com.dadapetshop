@@ -1,9 +1,14 @@
 package com.dadapetshop.registrations.mapper;
 
+import java.util.Collections;
+import java.util.List;
+
 import org.mapstruct.Named;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.dadapetshop.registrations.dto.PetDTO;
+import com.dadapetshop.registrations.model.Pet;
 import com.dadapetshop.registrations.model.Usuario;
 import com.dadapetshop.registrations.repository.UsuarioRepository;
 
@@ -29,6 +34,9 @@ public class UsuarioMapperHelper {
 
         return usuarioEncontrado.getEmail();
     }
-    
 
+    @Named("initializePets")
+    public List<Pet> initializePets(List<PetDTO> petDTOs) {
+        return Collections.emptyList();
+    }
 }
