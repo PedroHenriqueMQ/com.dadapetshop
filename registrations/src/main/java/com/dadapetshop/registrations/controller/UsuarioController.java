@@ -4,10 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.dadapetshop.registrations.dto.UsuarioDTO;
 import com.dadapetshop.registrations.service.UsuarioService;
@@ -24,5 +21,11 @@ public class UsuarioController {
         usuarioService.saveUsuario(usuario);
         return ResponseEntity.status(HttpStatus.CREATED).body("Usuário cadastrado com sucesso!");
     }
-        
+
+    @Transactional
+    @PutMapping("/add-pet")
+    public ResponseEntity<String> addPet(@RequestBody UsuarioDTO usuario) {
+        usuarioService.addPet(usuario);
+        return ResponseEntity.status(HttpStatus.OK).body("Pet adicionado ao usuário com sucesso!");
+    }
 }
