@@ -19,7 +19,7 @@ public class UsuarioMapperHelper {
 
     @Named("emailToUsuario")
     public Usuario emailToUsuario(String email) {
-        if (email == null) new IllegalArgumentException("Usuário com email " + email + " não encontrado");
+        if (email == null) throw new IllegalArgumentException("Usuário com email " + email + " não encontrado");
         
         return usuarioRepository.findByEmail(email)
                 .orElseThrow(() -> new IllegalArgumentException("Usuário não encontrado."));
@@ -27,7 +27,7 @@ public class UsuarioMapperHelper {
 
     @Named("usuarioToEmail")
     public String usuarioToEmail(Usuario usuario) {
-        if (usuario == null) new IllegalArgumentException("Usuário não encontrado.");
+        if (usuario == null) throw new IllegalArgumentException("Usuário não encontrado.");
 
         var usuarioEncontrado = usuarioRepository.findByEmail(usuario.getEmail())
                 .orElseThrow(() -> new IllegalArgumentException("Usuário não encontrado."));
