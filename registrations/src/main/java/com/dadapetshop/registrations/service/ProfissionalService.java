@@ -1,5 +1,6 @@
 package com.dadapetshop.registrations.service;
 
+import com.dadapetshop.registrations.exception.ProfissionalCPFDuplicadoException;
 import org.springframework.stereotype.Service;
 
 import com.dadapetshop.registrations.dto.ProfissionalDTO;
@@ -16,7 +17,7 @@ public class ProfissionalService {
 
     public void saveProfissional(ProfissionalDTO profissionalDTO) {
         if(profissionalRepository.findByCpf(profissionalDTO.cpf()).isPresent())
-                throw new IllegalStateException("Funcionário com esse CPF já existe.");
+                throw new ProfissionalCPFDuplicadoException();
 
         var profissional = profissionalMapper.toEntity(profissionalDTO);
         profissionalRepository.save(profissional);
