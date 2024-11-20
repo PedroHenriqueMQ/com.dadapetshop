@@ -9,7 +9,7 @@ public record ProdutoDTO(
         String codigo,
         String nome,
         @JsonProperty("quantidade")
-        String quantidadeEstoque,
+        int quantidadeEstoque,
         BigDecimal valor,
         ProdutoCategoria categoria
 ) {}

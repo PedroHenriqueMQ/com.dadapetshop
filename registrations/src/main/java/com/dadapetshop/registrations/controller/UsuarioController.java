@@ -23,7 +23,7 @@ public class UsuarioController {
     }
 
     @Transactional
-    @PutMapping("/add-pet")
+    @PatchMapping("/add-pet")
     public ResponseEntity<String> addPet(@RequestBody UsuarioDTO usuario) {
         usuarioService.addPet(usuario);
         return ResponseEntity.status(HttpStatus.OK).body("Pet adicionado ao usuário com sucesso!");

@@ -41,9 +41,25 @@ public class ProdutoController {
 
     @GetMapping("/categoria/{categoria}")
     public ResponseEntity<ProdutoDTO> findProdutoBycategoria(@PathVariable String categoria) {
-        System.out.println(categoria);
         var produto = produtoService.findProdutoByCategoria(categoria);
         return ResponseEntity.ok(produto);
     }
 
+    @PatchMapping("/update/estoque")
+    public ResponseEntity<String> updateProdutoQuantidade(@RequestBody ProdutoDTO produtoDTO) {
+        produtoService.updateProdutoQuantidade(produtoDTO);
+        return ResponseEntity.ok("Quantidade do produto atualizada com sucesso!");
+    }
+
+    @PatchMapping("/update/valor")
+    public ResponseEntity<String> updateProdutoValor(@RequestBody ProdutoDTO produtoDTO) {
+        produtoService.updateProdutoValor(produtoDTO);
+        return ResponseEntity.ok("Valor do produto atualizado com sucesso!");
+    }
+
+    @PatchMapping("/update/nome")
+    public ResponseEntity<String> updateProdutoNome(@RequestBody ProdutoDTO produtoDTO) {
+        produtoService.updateProdutoNome(produtoDTO);
+        return ResponseEntity.ok("Nome do produto atualizado com sucesso!");
+    }
 }
