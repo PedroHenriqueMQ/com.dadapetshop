@@ -1,5 +1,6 @@
 package com.dadapetshop.registrations.service;
 
+import com.dadapetshop.registrations.dto.PetDTO;
 import org.springframework.stereotype.Service;
 
 import com.dadapetshop.registrations.dto.UsuarioDTO;
@@ -7,6 +8,8 @@ import com.dadapetshop.registrations.mapper.UsuarioMapper;
 import com.dadapetshop.registrations.repository.UsuarioRepository;
 
 import lombok.AllArgsConstructor;
+
+import java.math.BigDecimal;
 
 @Service
 @AllArgsConstructor
@@ -31,5 +34,36 @@ public class UsuarioService {
                 .forEach(novoPet -> usuarioEncontrado.getPets().add(novoPet));
 
         usuarioRepository.save(usuarioEncontrado);
+    }
+
+    public void updatePet(PetDTO petDTO, String nome, String raca, Integer idade, BigDecimal peso) {
+        var usuario = usuarioRepository.findByEmail(petDTO.emailTutor())
+                .orElseThrow(() -> new IllegalArgumentException("Usuário não encontrado."));
+
+        var petFoiEncontrado = false;
+
+        for(int i = 0; i < usuario.getPets().size(); i++) {
+            var petAtual = usuario.getPets().get(i);
+
+            var condicaoDeAtualização =
+                    petAtual.getNome().equals(nome) &&
+                    petAtual.getRaca().equals(raca) &&
+                    petAtual.getIdade().equals(idade) &&
+                    petAtual.getPeso().equals(peso);
+
+            if (condicaoDeAtualização) {
+                petFoiEncontrado = true;
+
+                usuario.getPets().get(i).setNome(petDTO.nome());
+                usuario.getPets().get(i).setRaca(petDTO.raca());
+                usuario.getPets().get(i).setIdade(petDTO.idade());
+                usuario.getPets().get(i).setPeso(petDTO.peso());
+            }
+        }
+
+        if (!petFoiEncontrado)
+            throw new IllegalArgumentException("Pet não encontrado.");
+
+        usuarioRepository.save(usuario);
     }
 }
