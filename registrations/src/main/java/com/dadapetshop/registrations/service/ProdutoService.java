@@ -58,4 +58,30 @@ public class ProdutoService {
 
         return produtos.map(produtoMapper::toDTO);
     }
+
+    public void updateProdutoQuantidade(ProdutoDTO produtoDTO) {
+        var produto = produtoRepository.findByCodigo(produtoDTO.codigo())
+                .orElseThrow(() -> new IllegalArgumentException("Produto não encontrado."));
+        
+        produto.setQuantidadeEstoque(produtoDTO.quantidadeEstoque());
+        produtoRepository.save(produto);
+    }
+
+    public void updateProdutoValor(ProdutoDTO produtoDTO) {
+        var produto = produtoRepository.findByCodigo(produtoDTO.codigo())
+                .orElseThrow(() -> new IllegalArgumentException("Produto não encontrado."));
+        
+        produto.setValor(produtoDTO.valor());
+        produtoRepository.save(produto);
+    }
+
+    public void updateProdutoNome(ProdutoDTO produtoDTO) {
+        var produto = produtoRepository.findByCodigo(produtoDTO.codigo())
+                .orElseThrow(() -> new IllegalArgumentException("Produto não encontrado."));
+        
+        produto.setNome(produtoDTO.nome());
+        produtoRepository.save(produto);
+    }
 }
+
+
