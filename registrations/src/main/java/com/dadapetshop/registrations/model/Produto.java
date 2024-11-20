@@ -2,11 +2,7 @@ package com.dadapetshop.registrations.model;
 
 import java.math.BigDecimal;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.Setter;
@@ -27,4 +23,6 @@ public class Produto {
     @Column(name = "quantidade_prateleira")
     private int quantidadePrateleira;
     private BigDecimal valor;
+    @Enumerated(EnumType.STRING)
+    private ProdutoCategoria categoria;
 }
