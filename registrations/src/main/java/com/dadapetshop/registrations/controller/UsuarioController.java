@@ -44,4 +44,11 @@ public class UsuarioController {
         usuarioService.updatePet(petDTO, nome, raca, idade, peso);
         return ResponseEntity.ok("Pet atualizado com sucesso!");
     }
+
+    @Transactional
+    @DeleteMapping("/delete-pet")
+    public ResponseEntity<String>deletePet(@RequestBody PetDTO petDTO) {
+        usuarioService.deletePet(petDTO);
+        return ResponseEntity.ok("Pet removido com sucesso!");
+    }
 }

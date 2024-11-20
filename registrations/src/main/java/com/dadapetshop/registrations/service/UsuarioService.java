@@ -66,4 +66,33 @@ public class UsuarioService {
 
         usuarioRepository.save(usuario);
     }
+
+    public void deletePet(PetDTO petDTO) {
+        var usuario = usuarioRepository.findByEmail(petDTO.emailTutor())
+                .orElseThrow(() -> new IllegalArgumentException("Usuário não encontrado."));
+
+        var petFoiEncontrado = false;
+
+        for(int i = 0; i < usuario.getPets().size(); i++) {
+            var petAtual = usuario.getPets().get(i);
+
+            var condicaoDeExclusao =
+                    petAtual.getNome().equals(petDTO.nome()) &&
+                            petAtual.getRaca().equals(petDTO.raca()) &&
+                            petAtual.getIdade().equals(petDTO.idade()) &&
+                            petAtual.getPeso().equals(petDTO.peso());
+
+            if (condicaoDeExclusao) {
+                petFoiEncontrado = true;
+
+                usuario.getPets().remove(i);
+                usuarioRepository.save(usuario);
+            }
+        }
+
+        if (!petFoiEncontrado)
+            throw new IllegalArgumentException("Pet não encontrado.");
+
+        usuarioRepository.save(usuario);
+    }
 }
