@@ -1,6 +1,8 @@
 package com.dadapetshop.registrations.service;
 
 import com.dadapetshop.registrations.model.Produto;
+import com.dadapetshop.registrations.model.ProdutoCategoria;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -28,6 +30,22 @@ public class ProdutoService {
 
     public ProdutoDTO findProdutoByCodigo(String codigoProduto) {
         var produto = produtoRepository.findByCodigo(codigoProduto)
+                .orElseThrow(() -> new IllegalArgumentException("Produto não encontrado."));
+
+        var produtoToProdutoDTO = produtoMapper.toDTO(produto);
+        return produtoToProdutoDTO;
+    }
+
+    public ProdutoDTO findProdutoByCategoria(String categoria) {
+        ProdutoCategoria categoriaStringToEnum;
+
+        try {
+            categoriaStringToEnum = Enum.valueOf(ProdutoCategoria.class, categoria);
+        } catch (IllegalArgumentException | NullPointerException e) {
+            throw new IllegalArgumentException("Categoria não encontrada.");
+        }
+
+        var produto = produtoRepository.findByCategoria(categoriaStringToEnum)
                 .orElseThrow(() -> new IllegalArgumentException("Produto não encontrado."));
 
         var produtoToProdutoDTO = produtoMapper.toDTO(produto);
