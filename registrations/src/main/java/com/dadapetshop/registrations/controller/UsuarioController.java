@@ -1,5 +1,6 @@
 package com.dadapetshop.registrations.controller;
 
+import com.dadapetshop.registrations.dto.PetDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -8,6 +9,8 @@ import org.springframework.web.bind.annotation.*;
 
 import com.dadapetshop.registrations.dto.UsuarioDTO;
 import com.dadapetshop.registrations.service.UsuarioService;
+
+import java.math.BigDecimal;
 
 @RestController
 @RequestMapping("/user")
@@ -27,5 +30,18 @@ public class UsuarioController {
     public ResponseEntity<String> addPet(@RequestBody UsuarioDTO usuario) {
         usuarioService.addPet(usuario);
         return ResponseEntity.status(HttpStatus.OK).body("Pet adicionado ao usuário com sucesso!");
+    }
+
+    @Transactional
+    @PatchMapping("/update-pet")
+    public ResponseEntity<String> updatePet(
+            @RequestBody PetDTO petDTO,
+            @RequestParam String nome,
+            @RequestParam String raca,
+            @RequestParam Integer idade,
+            @RequestParam BigDecimal peso
+            ) {
+        usuarioService.updatePet(petDTO, nome, raca, idade, peso);
+        return ResponseEntity.ok("Pet atualizado com sucesso!");
     }
 }
