@@ -1,6 +1,10 @@
 package com.dadapetshop.registrations.service;
 
 import com.dadapetshop.registrations.dto.PetDTO;
+import com.dadapetshop.registrations.exception.PetDuplicadoException;
+import com.dadapetshop.registrations.exception.PetNaoEncontradoException;
+import com.dadapetshop.registrations.exception.UsuarioEmailDuplicadoException;
+import com.dadapetshop.registrations.exception.UsuarioNaoEncontradoException;
 import org.springframework.stereotype.Service;
 
 import com.dadapetshop.registrations.dto.UsuarioDTO;
@@ -19,7 +23,7 @@ public class UsuarioService {
 
     public void saveUsuario(UsuarioDTO usuarioDTO) {
         if(usuarioRepository.findByEmail(usuarioDTO.email()).isPresent())
-                throw new IllegalStateException("Usuário com esse e-mail já existe.");
+                throw new UsuarioEmailDuplicadoException();
 
         var usuario = usuarioMapper.toEntityBeforeSave(usuarioDTO);
         usuarioRepository.save(usuario);
@@ -27,18 +31,33 @@ public class UsuarioService {
 
     public void addPet(UsuarioDTO usuarioDTO) {
         var usuarioEncontrado = usuarioRepository.findByEmail(usuarioDTO.email())
-                .orElseThrow(() -> new IllegalStateException("Usuário não encontrado."));
+                .orElseThrow(UsuarioNaoEncontradoException::new);
 
         var usuarioMapeado = usuarioMapper.toEntityAfterSave(usuarioDTO);
         usuarioMapeado.getPets()
-                .forEach(novoPet -> usuarioEncontrado.getPets().add(novoPet));
+                .forEach(novoPet -> {
+                    for(int i = 0; i < usuarioEncontrado.getPets().size(); i++) {
+                        var petAtual = usuarioEncontrado.getPets().get(i);
+
+                        var condicaoDeAtualização =
+                                petAtual.getNome().equals(novoPet.getNome()) &&
+                                petAtual.getRaca().equals(novoPet.getRaca()) &&
+                                petAtual.getIdade().equals(novoPet.getIdade()) &&
+                                petAtual.getPeso().equals(novoPet.getPeso());
+
+                        if (condicaoDeAtualização)
+                            usuarioEncontrado.getPets().add(novoPet);
+                        else
+                            throw new PetDuplicadoException();
+                    }
+                });
 
         usuarioRepository.save(usuarioEncontrado);
     }
 
     public void updatePet(PetDTO petDTO, String nome, String raca, Integer idade, BigDecimal peso) {
         var usuario = usuarioRepository.findByEmail(petDTO.emailTutor())
-                .orElseThrow(() -> new IllegalArgumentException("Usuário não encontrado."));
+                .orElseThrow(UsuarioNaoEncontradoException::new);
 
         var petFoiEncontrado = false;
 
@@ -62,14 +81,14 @@ public class UsuarioService {
         }
 
         if (!petFoiEncontrado)
-            throw new IllegalArgumentException("Pet não encontrado.");
+            throw new PetNaoEncontradoException();
 
         usuarioRepository.save(usuario);
     }
 
     public void deletePet(PetDTO petDTO) {
         var usuario = usuarioRepository.findByEmail(petDTO.emailTutor())
-                .orElseThrow(() -> new IllegalArgumentException("Usuário não encontrado."));
+                .orElseThrow(UsuarioNaoEncontradoException::new);
 
         var petFoiEncontrado = false;
 
@@ -91,7 +110,7 @@ public class UsuarioService {
         }
 
         if (!petFoiEncontrado)
-            throw new IllegalArgumentException("Pet não encontrado.");
+            throw new PetNaoEncontradoException();
 
         usuarioRepository.save(usuario);
     }
