@@ -33,9 +33,17 @@ public class ProdutoController {
         return ResponseEntity.ok(produtos);
     }
 
-    @GetMapping("/{codigo}")
+    @GetMapping("/codigo/{codigo}")
     public ResponseEntity<ProdutoDTO> findProdutoByCodigo(@PathVariable String codigo) {
         var produto = produtoService.findProdutoByCodigo(codigo);
         return ResponseEntity.ok(produto);
     }
+
+    @GetMapping("/categoria/{categoria}")
+    public ResponseEntity<ProdutoDTO> findProdutoBycategoria(@PathVariable String categoria) {
+        System.out.println(categoria);
+        var produto = produtoService.findProdutoByCategoria(categoria);
+        return ResponseEntity.ok(produto);
+    }
+
 }
