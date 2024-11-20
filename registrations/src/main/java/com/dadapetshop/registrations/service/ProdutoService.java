@@ -1,5 +1,8 @@
 package com.dadapetshop.registrations.service;
 
+import com.dadapetshop.registrations.exception.CategoriaNaoEncontradaException;
+import com.dadapetshop.registrations.exception.ProdutoDuplicadoException;
+import com.dadapetshop.registrations.exception.ProdutoNaoEncontradoException;
 import com.dadapetshop.registrations.model.Produto;
 import com.dadapetshop.registrations.model.ProdutoCategoria;
 
@@ -22,7 +25,7 @@ public class ProdutoService {
 
     public void saveProduto(ProdutoDTO produtoDTO) {
         if (produtoRepository.findByCodigo(produtoDTO.codigo()).isPresent())
-            throw new IllegalStateException("Um produto com esse código já existe.");
+            throw new ProdutoDuplicadoException();
 
         var produto = produtoMapper.toEntity(produtoDTO);
         produtoRepository.save(produto);
@@ -30,7 +33,7 @@ public class ProdutoService {
 
     public ProdutoDTO findProdutoByCodigo(String codigoProduto) {
         var produto = produtoRepository.findByCodigo(codigoProduto)
-                .orElseThrow(() -> new IllegalArgumentException("Produto não encontrado."));
+                .orElseThrow(ProdutoNaoEncontradoException::new);
 
         var produtoToProdutoDTO = produtoMapper.toDTO(produto);
         return produtoToProdutoDTO;
@@ -42,11 +45,11 @@ public class ProdutoService {
         try {
             categoriaStringToEnum = Enum.valueOf(ProdutoCategoria.class, categoria);
         } catch (IllegalArgumentException | NullPointerException e) {
-            throw new IllegalArgumentException("Categoria não encontrada.");
+            throw new CategoriaNaoEncontradaException();
         }
 
         var produto = produtoRepository.findByCategoria(categoriaStringToEnum)
-                .orElseThrow(() -> new IllegalArgumentException("Produto não encontrado."));
+                .orElseThrow(ProdutoNaoEncontradoException::new);
 
         var produtoToProdutoDTO = produtoMapper.toDTO(produto);
         return produtoToProdutoDTO;
@@ -61,7 +64,7 @@ public class ProdutoService {
 
     public void updateProdutoQuantidade(ProdutoDTO produtoDTO) {
         var produto = produtoRepository.findByCodigo(produtoDTO.codigo())
-                .orElseThrow(() -> new IllegalArgumentException("Produto não encontrado."));
+                .orElseThrow(ProdutoNaoEncontradoException::new);
         
         produto.setQuantidadeEstoque(produtoDTO.quantidadeEstoque());
         produtoRepository.save(produto);
@@ -69,7 +72,7 @@ public class ProdutoService {
 
     public void updateProdutoValor(ProdutoDTO produtoDTO) {
         var produto = produtoRepository.findByCodigo(produtoDTO.codigo())
-                .orElseThrow(() -> new IllegalArgumentException("Produto não encontrado."));
+                .orElseThrow(ProdutoNaoEncontradoException::new);
         
         produto.setValor(produtoDTO.valor());
         produtoRepository.save(produto);
@@ -77,7 +80,7 @@ public class ProdutoService {
 
     public void updateProdutoNome(ProdutoDTO produtoDTO) {
         var produto = produtoRepository.findByCodigo(produtoDTO.codigo())
-                .orElseThrow(() -> new IllegalArgumentException("Produto não encontrado."));
+                .orElseThrow(ProdutoNaoEncontradoException::new);
         
         produto.setNome(produtoDTO.nome());
         produtoRepository.save(produto);
@@ -85,7 +88,7 @@ public class ProdutoService {
 
     public void deleteProduto(String codigoProduto) {
         var produto = produtoRepository.findByCodigo(codigoProduto)
-                .orElseThrow(() -> new IllegalArgumentException("Produto não encontrado."));
+                .orElseThrow(ProdutoNaoEncontradoException::new);
                 
         produtoRepository.delete(produto);
     }
