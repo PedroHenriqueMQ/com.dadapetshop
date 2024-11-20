@@ -82,6 +82,13 @@ public class ProdutoService {
         produto.setNome(produtoDTO.nome());
         produtoRepository.save(produto);
     }
+
+    public void deleteProduto(String codigoProduto) {
+        var produto = produtoRepository.findByCodigo(codigoProduto)
+                .orElseThrow(() -> new IllegalArgumentException("Produto não encontrado."));
+                
+        produtoRepository.delete(produto);
+    }
 }
 
 
