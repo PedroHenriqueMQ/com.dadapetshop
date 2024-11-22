@@ -1,4 +1,4 @@
-package com.dadapetshop.registrations.dto;
+package com.dadapetshop.service_flow_control.dto;
 
 import java.util.List;
 
