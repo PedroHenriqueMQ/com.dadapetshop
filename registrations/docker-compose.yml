@@ -7,6 +7,6 @@ services:
     environment:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
-      POSTGRES_DB: registrations
+      POSTGRES_DB: dadapetshop_registrations
     ports:
       - "5435:5432"
