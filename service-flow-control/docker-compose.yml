@@ -8,3 +8,10 @@ services:
       MONGO_INITDB_DATABASE: service_flow_control
     ports:
       - "27018:27017"
+    
+  rabbitmq:
+    image: rabbitmq:4.0-management
+    container_name: service_flow_control-rabbitmq
+    ports:
+      - 5672:5672
+      - 15672:15672
