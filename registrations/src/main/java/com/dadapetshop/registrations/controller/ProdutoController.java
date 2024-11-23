@@ -19,7 +19,7 @@ public class ProdutoController {
 
     @Transactional
     @PostMapping("/register-product")
-    public ResponseEntity<String> saveProduto(@RequestBody ProdutoDTO produto){
+    public ResponseEntity<String> saveProduto(@RequestBody ProdutoDTO produto) {
         produtoService.saveProduto(produto);
         return ResponseEntity.status(HttpStatus.CREATED).body("Produto cadastrado com sucesso!");
     }
