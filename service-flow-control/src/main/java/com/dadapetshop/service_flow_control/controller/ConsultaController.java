@@ -12,7 +12,6 @@ import com.dadapetshop.service_flow_control.service.ConsultaService;
 
 import jakarta.validation.Valid;
 
-
 @RestController
 @RequestMapping("/consultation")
 public class ConsultaController {
