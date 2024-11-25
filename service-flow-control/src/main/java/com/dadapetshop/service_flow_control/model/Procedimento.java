@@ -14,7 +14,7 @@ import java.time.LocalDateTime;
 
 @Getter
 @Setter
-@Document(collection = "Procedimento")
+@Document(collection = "atendimento")
 public class Procedimento {
     @Id
     private String id;

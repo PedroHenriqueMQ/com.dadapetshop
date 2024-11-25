@@ -21,6 +21,12 @@ spring:
     enabled: true
     locations: classpath:/db/migration
 
+  rabbit:
+    host: localhost
+    port: 5672
+    username: guest
+    password: guest
+
 server:
   servlet:
     context-path: /registrations

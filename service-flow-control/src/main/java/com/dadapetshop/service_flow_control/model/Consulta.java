@@ -16,7 +16,7 @@ import java.util.List;
 
 @Getter
 @Setter
-@Document(collection = "Consulta")
+@Document(collection = "atendimento")
 public class Consulta {
     @Id
     private String id;

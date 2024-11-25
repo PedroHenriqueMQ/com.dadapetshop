@@ -21,6 +21,6 @@ public class ConsultaController {
     @PostMapping("/validate-consultation")
     public ResponseEntity<String> validarConsulta(@Valid @RequestBody ConsultaDTO consultaDTO) {
         consultaService.validarConsulta(consultaDTO);
-        return ResponseEntity.ok("Validação enviada com sucesso!");
+        return ResponseEntity.ok("Envida mensagem de validação de consulta!");
     }
 }
