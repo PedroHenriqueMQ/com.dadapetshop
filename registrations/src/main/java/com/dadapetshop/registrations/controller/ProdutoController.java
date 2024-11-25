@@ -1,5 +1,6 @@
 package com.dadapetshop.registrations.controller;
 
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
@@ -19,7 +20,7 @@ public class ProdutoController {
 
     @Transactional
     @PostMapping("/register-product")
-    public ResponseEntity<String> saveProduto(@RequestBody ProdutoDTO produto) {
+    public ResponseEntity<String> saveProduto(@Valid @RequestBody ProdutoDTO produto) {
         produtoService.saveProduto(produto);
         return ResponseEntity.status(HttpStatus.CREATED).body("Produto cadastrado com sucesso!");
     }
@@ -46,25 +47,25 @@ public class ProdutoController {
     }
 
     @PatchMapping("/update/estoque")
-    public ResponseEntity<String> updateProdutoQuantidade(@RequestBody ProdutoDTO produtoDTO) {
+    public ResponseEntity<String> updateProdutoQuantidade(@Valid @RequestBody ProdutoDTO produtoDTO) {
         produtoService.updateProdutoQuantidade(produtoDTO);
         return ResponseEntity.ok("Quantidade do produto atualizada com sucesso!");
     }
 
     @PatchMapping("/update/valor")
-    public ResponseEntity<String> updateProdutoValor(@RequestBody ProdutoDTO produtoDTO) {
+    public ResponseEntity<String> updateProdutoValor(@Valid @RequestBody ProdutoDTO produtoDTO) {
         produtoService.updateProdutoValor(produtoDTO);
         return ResponseEntity.ok("Valor do produto atualizado com sucesso!");
     }
 
     @PatchMapping("/update/nome")
-    public ResponseEntity<String> updateProdutoNome(@RequestBody ProdutoDTO produtoDTO) {
+    public ResponseEntity<String> updateProdutoNome(@Valid @RequestBody ProdutoDTO produtoDTO) {
         produtoService.updateProdutoNome(produtoDTO);
         return ResponseEntity.ok("Nome do produto atualizado com sucesso!");
     }
 
     @DeleteMapping("/delete/{codigoProduto}")
-    public ResponseEntity<String> deleteProduto(@PathVariable String codigoProduto) {
+    public ResponseEntity<String> deleteProduto(@Valid @PathVariable String codigoProduto) {
         produtoService.deleteProduto(codigoProduto);
         return ResponseEntity.ok("Produto removido com sucesso!");
     } 
