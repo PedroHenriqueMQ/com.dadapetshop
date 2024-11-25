@@ -12,6 +12,5 @@ import com.dadapetshop.service_flow_control.dto.ProdutoDTO;
 @Component
 public interface IRegistrationsClient {
     @GetMapping("/codigo/{codigo}")
-    @Bean
     ProdutoDTO getProduto(@PathVariable("codigo") String codigo);
 }
