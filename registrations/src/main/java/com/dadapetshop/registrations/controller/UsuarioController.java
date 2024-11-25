@@ -1,6 +1,7 @@
 package com.dadapetshop.registrations.controller;
 
 import com.dadapetshop.registrations.dto.PetDTO;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,14 +21,14 @@ public class UsuarioController {
 
     @Transactional
     @PostMapping("/create-account")
-    public ResponseEntity<String> saveUsuario(@RequestBody UsuarioDTO usuario) {
+    public ResponseEntity<String> saveUsuario(@Valid @RequestBody UsuarioDTO usuario) {
         usuarioService.saveUsuario(usuario);
         return ResponseEntity.status(HttpStatus.CREATED).body("Usuário cadastrado com sucesso!");
     }
 
     @Transactional
     @PatchMapping("/add-pet")
-    public ResponseEntity<String> addPet(@RequestBody UsuarioDTO usuario) {
+    public ResponseEntity<String> addPet(@Valid @RequestBody UsuarioDTO usuario) {
         usuarioService.addPet(usuario);
         return ResponseEntity.status(HttpStatus.OK).body("Pet adicionado ao usuário com sucesso!");
     }
@@ -47,7 +48,7 @@ public class UsuarioController {
 
     @Transactional
     @DeleteMapping("/delete-pet")
-    public ResponseEntity<String>deletePet(@RequestBody PetDTO petDTO) {
+    public ResponseEntity<String>deletePet(@Valid @RequestBody PetDTO petDTO) {
         usuarioService.deletePet(petDTO);
         return ResponseEntity.ok("Pet removido com sucesso!");
     }

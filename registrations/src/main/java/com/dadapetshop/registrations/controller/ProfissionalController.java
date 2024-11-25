@@ -1,5 +1,6 @@
 package com.dadapetshop.registrations.controller;
 
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,7 +22,7 @@ public class ProfissionalController {
 
     @Transactional
     @PostMapping("/register-employee")
-    public ResponseEntity<String> saveProfissional(@RequestBody ProfissionalDTO profissional){
+    public ResponseEntity<String> saveProfissional(@Valid @RequestBody ProfissionalDTO profissional){
         profissionalService.saveProfissional(profissional);
         return ResponseEntity.status(HttpStatus.CREATED).body("Funcionário cadastrado com sucesso!");
     }
