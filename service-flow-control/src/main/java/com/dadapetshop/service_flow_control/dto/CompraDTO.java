@@ -17,8 +17,6 @@ public class CompraDTO {
     @JsonProperty("codigo_fiscal")
     @NotBlank(message = "Campo código fiscal não pode estar vazio.")
     private String codigoFiscal;
-    @NotBlank(message = "Campo atendente não pode estar vazio.")
-    private String atendente;
     @NotBlank(message = "Campo cliente não pode estar vazio.")
     private String cliente;
     @NotEmpty(message = "Lista de produtos não pode estar vazia.")
