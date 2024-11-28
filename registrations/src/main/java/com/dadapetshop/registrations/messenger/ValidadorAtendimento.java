@@ -24,9 +24,9 @@ public class ValidadorAtendimento {
         try {
             var procedimento = conversor.deserializarMessageDTO(message.getBody(), ProcedimentoDTO.class);
             System.out.println(procedimento);
+            return;
         } catch (ConversaoDeMessageDTOFalhaException e) {
             log.error("Falha ao deserializar ProcedimentoDTO: {}", e.getMessage());
-            return;
         } catch (IOException e) {
             log.error(e.getMessage());
         }
