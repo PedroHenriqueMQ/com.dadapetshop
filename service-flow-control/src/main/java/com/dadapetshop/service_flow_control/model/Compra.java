@@ -21,8 +21,6 @@ public class Compra {
     private String id;
     private String codigoFiscal;
     @DBRef
-    private ProfissionalDTO atendente;
-    @DBRef
     private UsuarioDTO usuarioComprou;
     private List<ProdutoDTO> produtos = new ArrayList<>();
     private BigDecimal valorTotal;
