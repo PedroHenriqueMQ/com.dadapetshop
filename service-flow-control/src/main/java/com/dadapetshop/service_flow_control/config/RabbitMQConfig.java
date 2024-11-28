@@ -37,6 +37,7 @@ public class RabbitMQConfig {
     public RabbitTemplate rabbitTemplate(final Jackson2JsonMessageConverter converter) {
         var rabbitTemplate = new RabbitTemplate(connectionFactory());
         rabbitTemplate.setMessageConverter(converter);
+        rabbitTemplate.setReplyTimeout(10000);
         return rabbitTemplate;
     }
 
