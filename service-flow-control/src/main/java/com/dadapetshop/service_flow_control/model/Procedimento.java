@@ -3,6 +3,7 @@ package com.dadapetshop.service_flow_control.model;
 import com.dadapetshop.service_flow_control.dto.ProfissionalDTO;
 import com.dadapetshop.service_flow_control.dto.UsuarioDTO;
 import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.data.annotation.Id;
@@ -15,6 +16,7 @@ import java.time.LocalDateTime;
 @Getter
 @Setter
 @Document(collection = "atendimento")
+@Builder
 public class Procedimento {
     @Id
     private String id;

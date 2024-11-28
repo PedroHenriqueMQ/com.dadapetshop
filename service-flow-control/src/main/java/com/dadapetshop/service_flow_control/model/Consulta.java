@@ -3,6 +3,7 @@ package com.dadapetshop.service_flow_control.model;
 import com.dadapetshop.service_flow_control.dto.ProdutoDTO;
 import com.dadapetshop.service_flow_control.dto.ProfissionalDTO;
 import com.dadapetshop.service_flow_control.dto.UsuarioDTO;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.data.annotation.Id;
@@ -17,6 +18,7 @@ import java.util.List;
 @Getter
 @Setter
 @Document(collection = "atendimento")
+@Builder
 public class Consulta {
     @Id
     private String id;
