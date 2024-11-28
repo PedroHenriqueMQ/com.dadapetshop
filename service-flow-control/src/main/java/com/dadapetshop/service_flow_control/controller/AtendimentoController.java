@@ -8,19 +8,19 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.dadapetshop.service_flow_control.dto.ProcedimentoDTO;
-import com.dadapetshop.service_flow_control.service.ProcedimentoService;
+import com.dadapetshop.service_flow_control.service.AtendimentoService;
 
 import jakarta.validation.Valid;
 
 @RestController
-@RequestMapping("/procedure")
-public class ProcedimentoController {
+@RequestMapping("/service")
+public class AtendimentoController {
     @Autowired
-    private ProcedimentoService procedimentoService;
+    private AtendimentoService atendimentoService;
 
-    @PostMapping("/validate-procedure")
-    public ResponseEntity<String> validarProcedimento(@Valid @RequestBody ProcedimentoDTO procedimentoDTO) {
-        procedimentoService.validarProcedimento(procedimentoDTO);
+    @PostMapping("/validate-service")
+    public ResponseEntity<String> validarProcedimento(@Valid @RequestBody Object atendimentoDTO) {
+        atendimentoService.validarAtendimento(atendimentoDTO);
         return ResponseEntity.ok("Validação enviada com sucesso!");
     }
 }

@@ -5,5 +5,6 @@ public enum ProdutoCategoria {
     TIGELAS,
     ROUPAS,
     COMIDAS,
-    BRINQUEDOS
+    BRINQUEDOS,
+    MEDICAMENTO
 }
