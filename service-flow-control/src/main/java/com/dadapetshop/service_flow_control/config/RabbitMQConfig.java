@@ -1,11 +1,9 @@
 package com.dadapetshop.service_flow_control.config;
 
+import lombok.Setter;
+import org.springframework.amqp.support.converter.MessageConverter;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
-
-import com.dadapetshop.service_flow_control.constants.RabbitConstants;
-
-import org.springframework.amqp.rabbit.config.SimpleRabbitListenerContainerFactory;
 import org.springframework.amqp.rabbit.connection.CachingConnectionFactory;
 import org.springframework.amqp.rabbit.connection.ConnectionFactory;
 import org.springframework.amqp.rabbit.core.RabbitAdmin;
@@ -16,11 +14,12 @@ import org.springframework.context.annotation.Bean;
 
 @Configuration
 @ConfigurationProperties(prefix = "spring.rabbit")
+@Setter
 public class RabbitMQConfig {
-    private String host = "localhost";
-    private int port = 5672;
-    private String username = "guest";
-    private String password = "guest";
+    private String host;
+    private int port;
+    private String username;
+    private String password;
     
     @Bean
     public ConnectionFactory connectionFactory() {
@@ -34,36 +33,22 @@ public class RabbitMQConfig {
 
     @Bean
     @Primary
-    public RabbitTemplate rabbitTemplate(final Jackson2JsonMessageConverter converter) {
-        var rabbitTemplate = new RabbitTemplate(connectionFactory());
-        rabbitTemplate.setMessageConverter(converter);
-        rabbitTemplate.setReplyTimeout(10000);
+    public RabbitTemplate rabbitTemplate(ConnectionFactory connectionFactory, MessageConverter messageConverter) {
+        var rabbitTemplate = new RabbitTemplate(connectionFactory);
+        rabbitTemplate.setMessageConverter(messageConverter);
+        rabbitTemplate.setReplyTimeout(5000);
         return rabbitTemplate;
     }
 
     @Bean
     @Primary
-    public RabbitAdmin rabbitAdmin() {
-        return new RabbitAdmin(connectionFactory());
+    public RabbitAdmin rabbitAdmin(ConnectionFactory connectionFactory) {
+        return new RabbitAdmin(connectionFactory);
     }
 
     @Bean
-    public Jackson2JsonMessageConverter jackson2JsonMessageConverter() {
+    public MessageConverter messageConverter() {
         return new Jackson2JsonMessageConverter();
-    }
-
-    @Bean(RabbitConstants.PET_ATTENDANCE_ROUTING_KEY)
-    public SimpleRabbitListenerContainerFactory petAttendanceQueueListenerFactory() {
-        var simpleListenerContainerFactory = new SimpleRabbitListenerContainerFactory();
-        simpleListenerContainerFactory.setConnectionFactory(connectionFactory());
-        return simpleListenerContainerFactory;
-    }
-
-    @Bean(RabbitConstants.PRODUCT_PURCHASE_ROUTING_KEY)
-    public SimpleRabbitListenerContainerFactory productPurchaseQueueListenerFactory() {
-        var simpleListenerContainerFactory = new SimpleRabbitListenerContainerFactory();
-        simpleListenerContainerFactory.setConnectionFactory(connectionFactory());
-        return simpleListenerContainerFactory;
     }
 }
 
