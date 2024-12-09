@@ -3,7 +3,6 @@ package com.dadapetshop.registrations.messenger;
 
 import com.dadapetshop.registrations.constants.RabbitConstants;
 import com.dadapetshop.registrations.dto.CompraDTO;
-import com.dadapetshop.registrations.dto.ProdutoDTO;
 import com.dadapetshop.registrations.exception.ConversaoDeMessageDTOFalhaException;
 import com.dadapetshop.registrations.mapper.MessageGenericConversor;
 import lombok.RequiredArgsConstructor;
