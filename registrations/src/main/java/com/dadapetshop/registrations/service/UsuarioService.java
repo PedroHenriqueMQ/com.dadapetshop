@@ -5,6 +5,7 @@ import com.dadapetshop.registrations.exception.PetDuplicadoException;
 import com.dadapetshop.registrations.exception.PetNaoEncontradoException;
 import com.dadapetshop.registrations.exception.UsuarioEmailDuplicadoException;
 import com.dadapetshop.registrations.exception.UsuarioNaoEncontradoException;
+import com.dadapetshop.registrations.model.Usuario;
 import org.springframework.stereotype.Service;
 
 import com.dadapetshop.registrations.dto.UsuarioDTO;
@@ -14,6 +15,7 @@ import com.dadapetshop.registrations.repository.UsuarioRepository;
 import lombok.AllArgsConstructor;
 
 import java.math.BigDecimal;
+import java.util.Optional;
 
 @Service
 @AllArgsConstructor
@@ -27,6 +29,10 @@ public class UsuarioService {
 
         var usuario = usuarioMapper.toEntityBeforeSave(usuarioDTO);
         usuarioRepository.save(usuario);
+    }
+
+    public Optional<Usuario> findByEmail(String email) {
+        return usuarioRepository.findByEmail(email);
     }
 
     public void addPet(UsuarioDTO usuarioDTO) {

@@ -20,8 +20,7 @@ public class Compra {
     @Id
     private String id;
     private String codigoFiscal;
-    @DBRef
     private UsuarioDTO usuarioComprou;
-    private List<ProdutoDTO> produtos = new ArrayList<>();
+    private List<String> produtos = new ArrayList<>();
     private BigDecimal valorTotal;
 }

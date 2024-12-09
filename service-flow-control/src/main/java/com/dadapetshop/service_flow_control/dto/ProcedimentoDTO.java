@@ -24,4 +24,4 @@ public record ProcedimentoDTO (
     LocalDateTime horarioMarcado,
     @NotNull(message = "Campo valor não pode estar nulo.")
     BigDecimal valor
-) { }
+) implements AtendimentoDTO { }

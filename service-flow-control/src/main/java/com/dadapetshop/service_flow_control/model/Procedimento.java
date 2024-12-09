@@ -21,10 +21,8 @@ public class Procedimento {
     @Id
     private String id;
     private String codigoFiscal;
-    @DBRef
-    private ProfissionalDTO atendente;
-    @DBRef
-    private UsuarioDTO usuarioComprou;
+    private String atendente;
+    private String usuarioComprou;
     private String tipoProcedimento;
     private LocalDateTime horarioInicio;
     private LocalDateTime horarioTermino;
