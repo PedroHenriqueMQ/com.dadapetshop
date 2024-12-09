@@ -1,6 +1,5 @@
 package com.dadapetshop.service_flow_control.messenger;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 
@@ -12,8 +11,12 @@ public class RabbbitMQProducer {
         rabbitTemplate.convertAndSend(queue, object);
     }
 
-    protected Boolean sendMessageAndReceive(final String queue, final Object object) {
-        var toReply = (String) rabbitTemplate.convertSendAndReceive(queue, object);
-        return Boolean.parseBoolean(toReply);
+    protected Boolean sendMessageAndReceiveValidityConfirmation(final String queue, final Object object) {
+        var toReply = rabbitTemplate.convertSendAndReceive(queue, object);
+
+        if (!(toReply instanceof Boolean))
+            toReply = rabbitTemplate.convertSendAndReceive(queue, object);
+
+        return (Boolean) toReply;
     }
 }
