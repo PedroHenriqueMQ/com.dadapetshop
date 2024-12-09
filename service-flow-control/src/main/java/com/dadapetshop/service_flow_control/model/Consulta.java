@@ -23,10 +23,8 @@ public class Consulta {
     @Id
     private String id;
     private String codigoFiscal;
-    @DBRef
-    private ProfissionalDTO veterinario;
-    @DBRef
-    private UsuarioDTO usuarioComprou;
+    private String veterinario;
+    private String usuarioComprou;
     private LocalDateTime horarioInicio;
     private LocalDateTime horarioTermino;
     private String status;
