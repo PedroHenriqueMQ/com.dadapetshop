@@ -18,6 +18,8 @@ public class Produto {
     private Long id;
     private String codigo;
     private String nome;
+    @Column(name = "caminho_imagem")
+    private String caminhoImagem;
     @Column(name = "quantidade_estoque")
     private int quantidadeEstoque;
     @Column(name = "quantidade_prateleira")

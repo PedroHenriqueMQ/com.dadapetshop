@@ -16,7 +16,7 @@ public record CompraDTO (
     @NotBlank(message = "Campo cliente não pode estar vazio.")
     String cliente,
     @NotEmpty(message = "Lista de produtos não pode estar vazia.")
-    List<ProdutoDTO> produtos,
+    List<String> produtos,
     @JsonProperty("valor_total")
     @Min(message = "Valor total não pode ser menor que 0.", value = 0)
     @NotNull(message = "Campo valor total não pode ser nulo.")

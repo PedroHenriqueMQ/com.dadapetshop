@@ -22,5 +22,7 @@ public record ProdutoDTO(
         @Min(message = "Valor não pode ser menor que 0.", value = 0)
         BigDecimal valor,
         @NotNull(message = "Campo categoria não pode estar nulo.")
-        ProdutoCategoria categoria
+        ProdutoCategoria categoria,
+        @JsonProperty("caminho_imagem")
+        String caminhoImagem
 ) {}

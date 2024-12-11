@@ -5,6 +5,8 @@ import com.dadapetshop.registrations.constants.RabbitConstants;
 import com.dadapetshop.registrations.dto.CompraDTO;
 import com.dadapetshop.registrations.exception.ConversaoDeMessageDTOFalhaException;
 import com.dadapetshop.registrations.mapper.MessageGenericConversor;
+import com.dadapetshop.registrations.service.ProdutoService;
+import com.dadapetshop.registrations.service.UsuarioService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.amqp.core.Message;
@@ -18,16 +20,29 @@ import java.io.IOException;
 @Slf4j
 public class ValidadorCompra {
     private final MessageGenericConversor conversor;
+    private final UsuarioService usuarioService;
+    private final ProdutoService produtoService;
 
     @RabbitListener(queues = RabbitConstants.PRODUCT_PURCHASE_QUEUE)
-    public void validarCompra(final Message message) {
+    public boolean validarCompra(final Message message) {
         try {
-            var produto = conversor.deserializarMessageDTO(message.getBody(), CompraDTO.class);
-            System.out.println(produto);
+            var compraDTO = conversor.deserializarMessageDTO(message.getBody(), CompraDTO.class);
+
+            if (usuarioService.findByEmail(compraDTO.cliente()).isEmpty())
+                return false;
+
+            for (String codigoProduto : compraDTO.produtos()) {
+                if (produtoService.findProdutoByCodigo(codigoProduto) == null)
+                    return false;
+            }
+
+            return true;
         } catch (ConversaoDeMessageDTOFalhaException fatalError) {
             log.error("Falha ao deserializar produtoDTO: {}", fatalError.getMessage());
         } catch (IOException e) {
             log.error(e.getMessage());
         }
+
+        return false;
     }
 }

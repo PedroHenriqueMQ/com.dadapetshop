@@ -1,5 +1,6 @@
 package com.dadapetshop.registrations.config;
 
+import com.dadapetshop.registrations.dto.CompraDTO;
 import com.dadapetshop.registrations.dto.ConsultaDTO;
 import com.dadapetshop.registrations.dto.ProcedimentoDTO;
 import lombok.Setter;
@@ -60,6 +61,7 @@ public class RabbitMQConfig {
         Map<String, Class<?>> idClassMapping = new HashMap<>();
         idClassMapping.put("com.dadapetshop.service_flow_control.dto.ProcedimentoDTO", ProcedimentoDTO.class);
         idClassMapping.put("com.dadapetshop.service_flow_control.dto.ProcedimentoDTO", ConsultaDTO.class);
+        idClassMapping.put("com.dadapetshop.service_flow_control.dto.CompraDTO", CompraDTO.class);
 
         typeMapper.setIdClassMapping(idClassMapping);
         typeMapper.setTrustedPackages("*");

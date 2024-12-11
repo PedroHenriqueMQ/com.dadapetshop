@@ -32,10 +32,11 @@ public class ProdutoService {
     }
 
     public ProdutoDTO findProdutoByCodigo(String codigoProduto) {
-        var produto = produtoRepository.findByCodigo(codigoProduto)
-                .orElseThrow(ProdutoNaoEncontradoException::new);
+        var produto = produtoRepository.findByCodigo(codigoProduto);
 
-        var produtoToProdutoDTO = produtoMapper.toDTO(produto);
+        if (produto.isEmpty()) return null;
+
+        var produtoToProdutoDTO = produtoMapper.toDTO(produto.get());
         return produtoToProdutoDTO;
     }
 
