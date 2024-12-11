@@ -29,7 +29,7 @@ public class AtendimentoService extends RabbbitMQProducer {
         this.consultaRepository = consultaRepository;
     }
 
-    public Boolean validarAtendimento(Object atendimentoDTO) {
+    public boolean validarAtendimento(Object atendimentoDTO) {
         return sendMessageAndReceiveValidityConfirmation(RabbitConstants.PET_ATTENDANCE_QUEUE, atendimentoDTO);
     }
 
