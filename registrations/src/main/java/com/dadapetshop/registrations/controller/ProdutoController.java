@@ -37,7 +37,7 @@ public class ProdutoController {
     @GetMapping("/codigo/{codigo}")
     public ResponseEntity<ProdutoDTO> findProdutoByCodigo(@PathVariable String codigo) {
         var produto = produtoService.findProdutoByCodigo(codigo);
-        return ResponseEntity.ok(produto);
+        return produto == null ? ResponseEntity.status(HttpStatus.BAD_REQUEST).build() : ResponseEntity.ok(produto);
     }
 
     @GetMapping("/categoria/{categoria}")
