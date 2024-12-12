@@ -8,6 +8,7 @@ import com.dadapetshop.registrations.dto.ProcedimentoDTO;
 import com.dadapetshop.registrations.dto.ProdutoDTO;
 import com.dadapetshop.registrations.exception.ConversaoDeMessageDTOFalhaException;
 import com.dadapetshop.registrations.mapper.MessageGenericConversor;
+import com.dadapetshop.registrations.security.AccountDetailsHolder;
 import com.dadapetshop.registrations.service.ProdutoService;
 import com.dadapetshop.registrations.service.ProfissionalService;
 import com.dadapetshop.registrations.service.UsuarioService;
@@ -29,11 +30,15 @@ public class ValidadorAtendimento {
     private final ProdutoService produtoService;
     private final UsuarioService usuarioService;
     private final ProfissionalService profissionalService;
+    private final AccountDetailsHolder accountDetailsHolder;
 
     @RabbitListener(queues = RabbitConstants.PET_ATTENDANCE_QUEUE)
     public boolean validarAtendimento(final Message message) {
         try {
             var procedimentoDTO = conversor.deserializarMessageDTO(message.getBody(), ProcedimentoDTO.class);
+
+            if (!accountDetailsHolder.isUserAuthenticated(procedimentoDTO.cliente()))
+                return false;
 
             if (usuarioValido(procedimentoDTO.cliente()) && profissionalValido(procedimentoDTO.atendente()))
                 return true;
@@ -45,6 +50,9 @@ public class ValidadorAtendimento {
 
         try {
             var consultaDTO = conversor.deserializarMessageDTO(message.getBody(), ConsultaDTO.class);
+
+            if (!accountDetailsHolder.isUserAuthenticated(consultaDTO.cliente()))
+                return false;
 
             if (usuarioValido(consultaDTO.cliente()) && profissionalValido(consultaDTO.veterinario())) {
                 for (ProdutoDTO produtoDTO : consultaDTO.medicamentos())

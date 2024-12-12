@@ -5,6 +5,7 @@ import com.dadapetshop.registrations.constants.RabbitConstants;
 import com.dadapetshop.registrations.dto.CompraDTO;
 import com.dadapetshop.registrations.exception.ConversaoDeMessageDTOFalhaException;
 import com.dadapetshop.registrations.mapper.MessageGenericConversor;
+import com.dadapetshop.registrations.security.AccountDetailsHolder;
 import com.dadapetshop.registrations.service.ProdutoService;
 import com.dadapetshop.registrations.service.UsuarioService;
 import lombok.RequiredArgsConstructor;
@@ -22,11 +23,15 @@ public class ValidadorCompra {
     private final MessageGenericConversor conversor;
     private final UsuarioService usuarioService;
     private final ProdutoService produtoService;
+    private final AccountDetailsHolder accountDetailsHolder;
 
     @RabbitListener(queues = RabbitConstants.PRODUCT_PURCHASE_QUEUE)
     public boolean validarCompra(final Message message) {
         try {
             var compraDTO = conversor.deserializarMessageDTO(message.getBody(), CompraDTO.class);
+
+            if (!accountDetailsHolder.isUserAuthenticated(compraDTO.cliente()))
+                return false;
 
             if (usuarioService.findByEmail(compraDTO.cliente()).isEmpty())
                 return false;

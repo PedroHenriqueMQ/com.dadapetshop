@@ -25,6 +25,6 @@ public class CompraController {
                 ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Compra não passou na etapa de validação!");
         }
 
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Compra realizada com sucesso!");
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Compra não passou na etapa de validação!");
     }
 }
